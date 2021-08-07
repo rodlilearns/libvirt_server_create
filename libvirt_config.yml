@@ -1,0 +1,14 @@
+---
+- name: Configure libvirt vm
+  hosts: libvirt_vm
+
+  vars_files:
+    - group_vars/libvirt_vars.yml
+
+  tasks:
+
+    - name: Patch VM
+      community.libvirt.libvirt_qemu:
+        executable: dnf install vim wget 
+        remote_addr: "{{ libvirt_vm_remote_addr }}"
+        virt_uri: "{{ libvirt_vm_uri }}"

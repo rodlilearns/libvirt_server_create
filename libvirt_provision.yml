@@ -1,0 +1,42 @@
+---
+- name: Create a VM in Libvirt
+  hosts: localhost
+
+  vars_files:
+    - group_vars/libvirt_vars.yml
+
+  tasks:
+
+    - name: Install dependencies
+      dnf:
+        name: 
+          - ansible
+          - python3
+          - libvirt-python3
+    - command: ansible-galaxy collection install community.libvirt
+
+    - name: List all VMs
+      community.libvirt.virt: 
+        command: list_vms
+      register: libvirt_all_vms_pre_creation
+    
+    - name: Create a VM in Libvirt
+      community.libvirt.virt:
+        autostart: "{{ libvirt_vm_autostart }}"
+        command: "{{ libvirt_vm_command }}"
+        name: "{{ libvirt_vm_name }}"
+        state: "{{ libivirt_vm_state }}"
+        uri: "{{ libvirt_uri }}"
+        xml: "{{ libvirt__vm_xml }}"
+
+    - name: List all VMs
+      community.libvirt.virt: 
+        command: list_vms
+      register: libvirt_all_vms_post_creation
+
+      # Connect to qemu
+    - plugin: community.libvirt.libvirt
+      uri: 'qemu:///system'
+      
+
+

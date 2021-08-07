@@ -1,0 +1,9 @@
+---
+libvirt_vm_remote_addr: 
+libvirt_vm_uri:
+libvirt_vm_autostart:
+libvirt_vm_command:
+libvirt_vm_name:
+libivirt_vm_state:
+libvirt_uri:
+libvirt__vm_xml:
